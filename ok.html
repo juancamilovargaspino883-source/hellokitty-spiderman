@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art 💗</title>
+
+    <style>
+        body {
+            background: #171538;
+            color: white;
+            font-family: monospace;
+            text-align: center;
+        }
+
+        h1 {
+            color: pink;
+            font-size: 30px;
+        }
+
+        canvas {
+            width: min(800px, 95%);
+            height: auto;
+            border: 4px solid pink;
+            image-rendering: pixelated;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 10px;
+            background: pink;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎀 Hello Kitty y Spider-Man 🕷️</h1>
+    <p>¡Personajes pixelados en movimiento!</p>
+
+    <canvas id="juego" width="800" height="350"></canvas>
+
+    <br>
+
+    <button onclick="iniciar()">▶ Mover</button>
+    <button onclick="detener()">⏸ Pausar</button>
+
+    <script>
+        const canvas = document.getElementById("juego");
+        const ctx = canvas.getContext("2d");
+
+        let movimiento = true;
+        let x1 = 50;
+        let x2 = 550;
+        let direccion1 = 1;
+        let direccion2 = -1;
+
+        // Dibuja un personaje con píxeles.
+        function pixel(x, y, color, tamano = 10) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, tamano, tamano);
+        }
+
+        // Hello Kitty pixelada.
+        function helloKitty(x, y) {
+            const blanco = "#ffffff";
+            const negro = "#222222";
+            const rosa = "#ff69b4";
+            const amarillo = "#ffd700";
+
+            // Orejas
+            pixel(x + 20, y, blanco);
+            pixel(x + 30, y, blanco);
+            pixel(x + 80, y, blanco);
+            pixel(x + 90, y, blanco);
+
+            // Cabeza
+            for (let fila = 1; fila < 9; fila++) {
+                for (let col = 1; col < 12; col++) {
+                    pixel(x + col * 10, y + fila * 10, blanco);
+                }
+            }
+
+            // Ojos
+            pixel(x + 30, y + 40, negro);
+            pixel(x + 80, y + 40, negro);
+
+            // Nariz
+            pixel(x + 60, y + 50, amarillo);
+
+            // Bigotes
+            pixel(x + 10, y + 50, negro);
+            pixel(x + 20, y + 60, negro);
+            pixel(x + 100, y + 50, negro);
+            pixel(x + 110, y + 60, negro);
+
+            // Lazo rosa
+            pixel(x + 100, y + 10, rosa, 15);
+            pixel(x + 115, y + 20, rosa, 15);
+            pixel(x + 100, y + 30, rosa, 15);
+
+            // Cuerpo
+            pixel(x + 40, y + 100, rosa);
+            pixel(x + 50, y + 100, rosa);
+            pixel(x + 60, y + 100, rosa);
+            pixel(x + 70, y + 100, rosa);
+
+            pixel(x + 30, y + 110, rosa);
+            pixel(x + 40, y + 110, rosa);
+            pixel(x + 50, y + 110, rosa);
+            pixel(x + 60, y + 110, rosa);
+            pixel(x + 70, y + 110, rosa);
+            pixel(x + 80, y + 110, rosa);
+        }
+
+        // Spider-Man pixelado.
+        function spiderMan(x, y) {
+            const rojo = "#e52535";
+            const azul = "#176bd1";
+            const negro = "#171717";
+            const blanco = "#ffffff";
+
+            // Cabeza roja
+            for (let fila = 0; fila < 8; fila++) {
+                for (let col = 2; col < 10; col++) {
+                    pixel(x + col * 10, y + fila * 10, rojo);
+                }
+            }
+
+            // Ojos blancos
+            pixel(x + 30, y + 30, blanco);
+            pixel(x + 40, y + 30, blanco);
+            pixel(x + 70, y + 30, blanco);
+            pixel(x + 80, y + 30, blanco);
+
+            // Líneas negras de la máscara
+            pixel(x + 50, y + 10, negro);
+            pixel(x + 50, y + 20, negro);
+            pixel(x + 50, y + 40, negro);
+            pixel(x + 50, y + 50, negro);
+
+            // Cuerpo azul
+            for (let fila = 8; fila < 13; fila++) {
+                for (let col = 2; col < 10; col++) {
+                    pixel(x + col * 10, y + fila * 10, azul);
+                }
+            }
+
+            // Emblema de araña
+            pixel(x + 50, y + 90, negro);
+            pixel(x + 40, y + 100, negro);
+            pixel(x + 60, y + 100, negro);
+            pixel(x + 50, y + 110, negro);
+        }
+
+        function dibujar() {
+            // Fondo
+            ctx.fillStyle = "#9bdcff";
+            ctx.fillRect(0, 0, 800, 350);
+
+            // Suelo
+            ctx.fillStyle = "#58c96b";
+            ctx.fillRect(0, 290, 800, 60);
+
+            // Nubes pixeladas
+            pixel(100, 40, "#ffffff", 20);
+            pixel(120, 40, "#ffffff", 20);
+            pixel(110, 30, "#ffffff", 20);
+
+            pixel(600, 70, "#ffffff", 20);
+            pixel(620, 70, "#ffffff", 20);
+            pixel(610, 60, "#ffffff", 20);
+
+            // Personajes
+            helloKitty(x1, 100);
+            spiderMan(x2, 100);
+
+            // Corazones decorativos
+            pixel(250, 60, "#ff69b4", 10);
+            pixel(270, 60, "#ff69b4", 10);
+            pixel(260, 70, "#ff69b4", 10);
+
+            pixel(450, 50, "#ff69b4", 10);
+            pixel(470, 50, "#ff69b4", 10);
+            pixel(460, 60, "#ff69b4", 10);
+        }
+
+        function animar() {
+            if (!movimiento) return;
+
+            dibujar();
+
+            // Mover a Hello Kitty.
+            x1 += 2 * direccion1;
+
+            if (x1 > 650 || x1 < 0) {
+                direccion1 *= -1;
+            }
+
+            // Mover a Spider-Man.
+            x2 += 3 * direccion2;
+
+            if (x2 > 650 || x2 < 0) {
+                direccion2 *= -1;
+            }
+
+            requestAnimationFrame(animar);
+        }
+
+        function iniciar() {
+            if (!movimiento) {
+                movimiento = true;
+                animar();
+            }
+        }
+
+        function detener() {
+            movimiento = false;
+        }
+
+        animar();
+    </script>
+
+</body>
+</html>
